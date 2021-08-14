@@ -1,9 +1,18 @@
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { toggleModal, setModalImage } from "../redux/actions";
 import styles from "../css/MovieList.module.css";
 
-const MovieList = ({ displayModal }) => {
+const MovieList = () => {
   // Redux setup
-  const movies = useSelector((state) => state);
+  const movies = useSelector((state) => state.movies);
+  const dispatch = useDispatch();
+
+  // Set modal window image & toggle modal display
+  const displayModal = (imgSrc) => {
+    dispatch(setModalImage(imgSrc));
+    dispatch(toggleModal(true));
+  };
 
   return (
     <div className={styles.container}>
