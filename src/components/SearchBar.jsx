@@ -11,25 +11,37 @@ const SearchBar = () => {
   // Store current text input
   const [query, setQuery] = useState("");
 
-  // Fetch data from API & update state
+  // Toggle display for empty or error search
+  const [error, setError] = useState(false);
+
+  const handleInputChange = (e) => {
+    setQuery(e.target.value);
+    setError(false);
+  };
+
+  // Fetch data based on search result & update state
   const getData = (e) => {
     e.preventDefault();
     axios
       .get(`http://www.omdbapi.com?apikey=faf7e5bb&s=${query}`)
-      .then((res) => dispatch(searchMovies(res.data.Search)));
+      .then((res) => dispatch(searchMovies(res.data.Search)))
+      .catch((error) => setError((prevState) => !prevState));
   };
 
   return (
-    <form className={styles.form} onSubmit={getData}>
-      <input
-        className={styles.input}
-        type="text"
-        placeholder="Search movies..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <button className={styles.search}>Search</button>
-    </form>
+    <>
+      {error && <div className={styles.error}>There seems to be an error. Try checking your input.</div>}
+      <form className={styles.form} onSubmit={getData}>
+        <input
+          className={styles.input}
+          type="text"
+          placeholder="Search movies..."
+          value={query}
+          onChange={(e) => handleInputChange(e)}
+        />
+        <button className={styles.search}>Search</button>
+      </form>
+    </>
   );
 };
 
