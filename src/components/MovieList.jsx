@@ -1,5 +1,4 @@
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   toggleModal,
   setModalImage,
@@ -14,13 +13,13 @@ const MovieList = () => {
   const movies = useSelector((state) => state.movies);
   const dispatch = useDispatch();
 
-  // Store the selected image & toggle modal display
+  // Store the selected poster image & toggle modal display
   const displayModal = (imgSrc) => {
     dispatch(setModalImage(imgSrc));
     dispatch(toggleModal(true));
   };
 
-  // Fetch movie details & toggle details display
+  // Fetch the selected movie details & toggle details display
   const displayMovieDetails = (id) => {
     axios
       .get(`http://www.omdbapi.com?apikey=faf7e5bb&i=${id}`)
@@ -38,7 +37,7 @@ const MovieList = () => {
       ) : (
         movies.map((movie) => {
           return (
-            <div className={styles.movie} key={movie.imdbID}>
+            <div className={styles.movie} key={`$${movie.Title}_${movie.imdbID}`}>
               <img
                 className={styles.poster}
                 src={movie.Poster}
