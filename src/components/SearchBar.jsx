@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { searchMovies } from "../redux/actions";
+import styles from "../css/SearchBar.module.css";
 
 const SearchBar = () => {
   // Redux setup
@@ -19,14 +20,15 @@ const SearchBar = () => {
   };
 
   return (
-    <form onSubmit={getData}>
+    <form className={styles.form} onSubmit={getData}>
       <input
+        className={styles.input}
         type="text"
         placeholder="Search movies..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <button>Search</button>
+      <button className={styles.search}>Search</button>
     </form>
   );
 };
