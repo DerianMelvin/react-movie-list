@@ -1,27 +1,19 @@
-import { useState } from "react";
 import ModalWindow from "./components/ModalWindow";
 import SearchBar from "./components/SearchBar";
 import MovieList from "./components/MovieList";
 import styles from "./css/App.module.css";
+import { useSelector } from "react-redux";
 
 function App() {
-  // Set modal window display & image
-  const [showModal, setShowModal] = useState(false);
-  const [modalImage, setModalImage] = useState("");
-
-  const displayModal = (imgSrc) => {
-    setModalImage(imgSrc);
-    setShowModal((prevState) => !prevState);
-  };
+  // Redux setup
+  const showModal = useSelector(state => state.showModal)
 
   return (
     <div className={styles.App}>
-      {showModal && (
-        <ModalWindow imgSrc={modalImage} setShowModal={setShowModal} />
-      )}
+      {showModal && <ModalWindow />}
 
       <SearchBar />
-      <MovieList displayModal={displayModal} />
+      <MovieList />
     </div>
   );
 }
