@@ -1,10 +1,16 @@
-import styles from '../css/ModalWindow.module.css';
+import { useDispatch, useSelector } from "react-redux";
+import { toggleModal } from "../redux/actions";
+import styles from "../css/ModalWindow.module.css";
 
-const ModalWindow = ({ imgSrc, setShowModal }) => {
+const ModalWindow = () => {
+  // Redux setup
+  const modalImage = useSelector((state) => state.modalImage);
+  const dispatch = useDispatch();
+
   return (
-    <div className={styles.overlay} onClick={() => setShowModal(prevState => !prevState)}>
+    <div className={styles.overlay} onClick={() => dispatch(toggleModal(false))}>
       <div>
-        <img src={imgSrc} alt={imgSrc} />
+        <img src={modalImage} alt={modalImage} />
       </div>
     </div>
   );
