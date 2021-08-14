@@ -5,6 +5,20 @@ const movies = (state = [], action) => {
   switch (action.type) {
     case "SEARCH_MOVIES":
       return (state = action.payload);
+    case "APPEND_MOVIES":
+      return [...state, ...action.payload];
+    default:
+      return state;
+  }
+};
+
+// Page index of the returned movie list
+const index = (state = 1, action) => {
+  switch (action.type) {
+    case "INCREMENT":
+      return state + 1;
+    case "RESET":
+      return (state = 1);
     default:
       return state;
   }
@@ -53,6 +67,7 @@ const movieDetails = (state = null, action) => {
 // Combine all reducers
 const allReducers = combineReducers({
   movies,
+  index,
   showModal,
   modalImage,
   showDetails,
