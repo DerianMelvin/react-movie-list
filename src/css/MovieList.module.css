@@ -58,4 +58,23 @@
     flex-direction: row;
     text-align: left;
   }
+  .poster {
+    transition: transform 0.2s ease-out;
+  }
+}
+
+/*
+  =============================
+    EFFECTS
+  =============================
+*/
+.movie:hover {
+  background-color: rgb(221, 221, 221);
+}
+
+@media (min-width: 500px) {
+  .poster:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+  }
 }

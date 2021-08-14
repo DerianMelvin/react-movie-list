@@ -47,7 +47,7 @@
 }
 
 .button {
-  margin: 2rem 0;
+  margin: 2rem 2rem;
   padding: 1rem 3rem;
 }
 
@@ -67,4 +67,18 @@
     height: 28rem;
     width: 18rem;
   }
+
+  .button {
+    transition: all 0.15s ease-out;
+  }
+}
+
+/*
+  =============================
+    EFFECTS
+  =============================
+*/
+.button:hover {
+  color: whitesmoke;
+  background-color: rgb(10, 2, 80);
 }

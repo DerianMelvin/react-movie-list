@@ -15,7 +15,7 @@
 
 .input,
 .search {
-  padding: 0.7rem 0.9rem;
+  padding: 1rem 1.3rem;
   border-radius: 0.2rem;
 }
 
@@ -35,4 +35,20 @@
   padding: 1rem;
   color: darkred;
   background-color: lightpink;
+}
+
+@media (min-width: 500px) {
+  .search {
+    transition: all 0.15s ease-out;
+  }
+}
+
+/*
+  =============================
+    EFFECTS
+  =============================
+*/
+.search:hover {
+  color: whitesmoke;
+  background-color: rgb(10, 2, 80);
 }
