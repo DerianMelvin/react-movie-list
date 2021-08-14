@@ -32,3 +32,22 @@ export const setMovieDetails = (data) => {
     payload: data,
   };
 };
+
+export const incrementIndex = () => {
+  return {
+    type: "INCREMENT",
+  };
+};
+
+export const resetIndex = () => {
+  return {
+    type: "RESET",
+  };
+}
+
+export const appendMovies = (data) => {
+  return {
+    type: "APPEND_MOVIES",
+    payload: data,
+  };
+};
