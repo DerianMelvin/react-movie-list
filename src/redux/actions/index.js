@@ -18,3 +18,17 @@ export const setModalImage = (data) => {
     payload: data,
   };
 };
+
+export const toggleDisplayDetails = (data) => {
+  return {
+    type: "TOGGLE_DISPLAY_DETAILS",
+    payload: data,
+  };
+};
+
+export const setMovieDetails = (data) => {
+  return {
+    type: "SET_MOVIE_DETAILS",
+    payload: data,
+  };
+};
