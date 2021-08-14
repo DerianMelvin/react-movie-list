@@ -1,6 +1,12 @@
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { toggleModal, setModalImage } from "../redux/actions";
+import {
+  toggleModal,
+  setModalImage,
+  setMovieDetails,
+  toggleDisplayDetails,
+} from "../redux/actions";
+import axios from "axios";
 import styles from "../css/MovieList.module.css";
 
 const MovieList = () => {
@@ -8,10 +14,19 @@ const MovieList = () => {
   const movies = useSelector((state) => state.movies);
   const dispatch = useDispatch();
 
-  // Set modal window image & toggle modal display
+  // Store the selected image & toggle modal display
   const displayModal = (imgSrc) => {
     dispatch(setModalImage(imgSrc));
     dispatch(toggleModal(true));
+  };
+
+  // Fetch movie details & toggle details display
+  const displayMovieDetails = (id) => {
+    axios
+      .get(`http://www.omdbapi.com?apikey=faf7e5bb&i=${id}`)
+      .then((res) => dispatch(setMovieDetails(res.data)))
+      .catch((error) => console.log(error))
+      .then(() => dispatch(toggleDisplayDetails(true)));
   };
 
   return (
@@ -30,7 +45,10 @@ const MovieList = () => {
                 alt={`${movie.Title} Poster`}
                 onClick={() => displayModal(movie.Poster)}
               />
-              <div className={styles.info}>
+              <div
+                className={styles.info}
+                onClick={() => displayMovieDetails(movie.imdbID)}
+              >
                 <h1>{movie.Title}</h1>
                 <h2 className={styles.year}>{movie.Year}</h2>
               </div>
