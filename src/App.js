@@ -1,8 +1,8 @@
-import "./App.css";
 import { useState } from "react";
 import ModalWindow from "./components/ModalWindow";
 import SearchBar from "./components/SearchBar";
 import MovieList from "./components/MovieList";
+import styles from "./css/App.module.css";
 
 function App() {
   // Set modal window display & image
@@ -15,8 +15,10 @@ function App() {
   };
 
   return (
-    <div className="App">
-      {showModal && <ModalWindow imgSrc={modalImage} setShowModal={setShowModal} />}
+    <div className={styles.App}>
+      {showModal && (
+        <ModalWindow imgSrc={modalImage} setShowModal={setShowModal} />
+      )}
 
       <SearchBar />
       <MovieList displayModal={displayModal} />
