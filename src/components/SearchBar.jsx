@@ -28,9 +28,24 @@ const SearchBar = () => {
 
   // Listens for scroll behaviour
   useEffect(() => {
+    // Checks if browser window is scrolled to bottom
+    const handleScroll = () => {
+      let difference =
+        document.documentElement.scrollHeight - window.innerHeight;
+      let scrollposition = document.documentElement.scrollTop;
+
+      if (difference - scrollposition <= 1) {
+        dispatch(incrementIndex());
+        setLoadMore(true);
+      }
+
+      return;
+    };
+
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [dispatch]);
 
   // Checks if loadMore is true
   useEffect(() => {
@@ -38,8 +53,16 @@ const SearchBar = () => {
       return;
     }
 
+    // Fetch & load the next data
+    const loadData = () => {
+      axios
+        .get(`http://www.omdbapi.com?apikey=faf7e5bb&s=${query}&page=${index}`)
+        .then((res) => dispatch(appendMovies(res.data.Search)))
+        .catch((error) => console.log(error))
+        .then(() => setLoadMore(false));
+    };
     loadData();
-  }, [loadMore]);
+  }, [loadMore, dispatch, index, query]);
 
   // Checks if indexReset is true
   useEffect(() => {
@@ -47,30 +70,16 @@ const SearchBar = () => {
       return;
     }
 
+    // Fetch data based on search result & update state
+    const fetchData = () => {
+      axios
+        .get(`http://www.omdbapi.com?apikey=faf7e5bb&s=${query}&page=${index}`)
+        .then((res) => dispatch(searchMovies(res.data.Search)))
+        .catch((error) => setError((prevState) => !prevState))
+        .then(() => setIndexReset(false));
+    };
     fetchData();
-  }, [indexReset]);
-
-  // Checks if browser window is scrolled to bottom
-  const handleScroll = () => {
-    let difference = document.documentElement.scrollHeight - window.innerHeight;
-    let scrollposition = document.documentElement.scrollTop;
-
-    if (difference - scrollposition <= 1) {
-      dispatch(incrementIndex());
-      setLoadMore(true);
-    }
-
-    return;
-  };
-
-  // Fetch & load the next data
-  const loadData = () => {
-    axios
-      .get(`http://www.omdbapi.com?apikey=faf7e5bb&s=${query}&page=${index}`)
-      .then((res) => dispatch(appendMovies(res.data.Search)))
-      .catch((error) => console.log(error))
-      .then(() => setLoadMore(false));
-  };
+  }, [indexReset, dispatch, index, query]);
 
   // Update query based on input
   // Close any error if occured
@@ -83,15 +92,6 @@ const SearchBar = () => {
     e.preventDefault();
     dispatch(resetIndex());
     setIndexReset(true);
-  };
-
-  // Fetch data based on search result & update state
-  const fetchData = () => {
-    axios
-      .get(`http://www.omdbapi.com?apikey=faf7e5bb&s=${query}&page=${index}`)
-      .then((res) => dispatch(searchMovies(res.data.Search)))
-      .catch((error) => setError((prevState) => !prevState))
-      .then(() => setIndexReset(false));
   };
 
   return (
